@@ -90,7 +90,7 @@ vm.increment()
 v-bind    v-bind:src=""
 v-if	    v-if=""
 v-show	  v-show=""
-v-for	    v-for="item in items" :key="item.id"
+v-for	    v-for="(item, index) in items" :key="item.id"
 v-on	      v-on:click=""
 v-model	    v-model=""
 
@@ -160,5 +160,45 @@ v-model：双向绑定，用来在 input、select、textarea、checkbox、radio
 <a @click="doSomething"></a>
 
 
+# 循环语句
+v-for
 
+## v-for 迭代对象
 
+### 一个参数
+<!-- 遍历的value值 -->
+<li v-for="value in object">
+{{ value }}
+</li>
+
+### 两个参数
+<!-- 📢 注意：value在前，key在后 -->
+v-for="(value,key) in object"
+
+### 三个参数
+v-for="(value, key, index) in object"
+
+## v-for 迭代整数
+v-for="n in 10"
+
+## 显示过滤/排序后的结果
+<!-- computed：计算属性 -->
+
+<li v-for="n in evenNumbers">{{ n }}</li>
+
+<script>
+const app = {
+    data() {
+        return {
+            numbers: [ 1, 2, 3, 4, 5 ]
+	     }
+    },
+    computed: {
+        evenNumbers() {
+            return this.numbers.filter(number => number % 2 === 0)
+        }
+    }
+}
+ 
+Vue.createApp(app).mount('#app')
+</script>
