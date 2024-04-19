@@ -202,3 +202,122 @@ const app = {
  
 Vue.createApp(app).mount('#app')
 </script>
+
+
+# 组件
+
+## 全局组件
+
+注册一个全局组件：
+const app = Vue.createApp({...})
+
+app.compoment('my-component-name', {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  template: `
+    <button @click="count++">
+      点了 {{ count }} 次！
+    </button>`
+})
+
+使用：
+<my-component-name></my-component-name>
+
+注意：template 中 ` 是反引号，不是单引号 '。
+
+## 局部组件
+const ComponentA = {
+  /* ... */
+}
+
+const app = Vue.createApp({
+  components: {
+    'component-a': ComponentA,
+    'component-b': ComponentB
+  }
+})
+
+## Prop
+属性：组件传值
+props: ['title'],
+
+### 动态 Prop
+父类用v-bind
+
+### Prop 验证
+props: {
+    // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+
+type 可以是下面原生构造器：
+
+String
+Number
+Boolean
+Array
+Object
+Date
+Function
+Symbol
+type 也可以是一个自定义构造器，使用 instanceof 检测。
+
+
+# Vue3 计算属性
+computed
+
+computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    }
+}
+
+性能：computed > methods
+
+## getter setter
+
+computed: {
+    site: {
+      // getter
+      get: function () {
+        return this.name + ' ' + this.url
+      },
+      // setter
+      set: function (newValue) {
+        var names = newValue.split(' ')
+        this.name = names[0]
+        this.url = names[names.length - 1]
+      }
+    }
