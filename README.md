@@ -321,3 +321,71 @@ computed: {
         this.url = names[names.length - 1]
       }
     }
+
+# Vue3 监听属性
+watch
+
+vm = Vue.createApp(app).mount('#app')
+vm.$watch('counter', function(nval, oval) {
+  alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+})
+
+# Vue3 样式绑定
+v-bind:xxx
+:xxx
+
+
+## class 属性绑定
+<div class="static" :class="{ 'active' : isActive, 'text-danger' : hasError }">
+</div>
+
+也可以通过computed返回一个样式
+<div id="app">
+    <div class="static" :class="classObject"></div>
+</div>
+
+computed: {
+  classObject() {
+    return {
+      active: this.isActive,
+      'text-danger': this.error
+    }
+  }
+}
+
+## 数组语法
+<div class="static" :class="[activeClass, errorClass]"></div>
+
+三元表达式
+<div id="app">
+    <div class="static" :class="[isActive ? activeClass : '', errorClass]"></div>
+</div>
+
+## Vue.js style(内联样式)
+v-bind:style / :style
+
+<div :style="{ color: activeColor, fontSize: fontSize + 'px' }">菜鸟教程</div>
+
+绑定样式对象
+<div :style="styleObject">菜鸟教程</div>
+
+<div :style="[baseStyles, overridingStyles]">菜鸟教程</div>
+
+## 多重值
+常用于提供多个带前缀的值
+<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+
+## 组件上使用 class 属性
+
+当你在带有单个根元素的自定义组件上使用 class 属性时，这些 class 将被添加到该元素中。此元素上的现有 class 将不会被覆盖。
+
+<runoob class="classC classD"></runoob>
+
+$attrs：定义哪些部分将接收这个类
+
+app.component('runoob', {
+  template: `
+    <p :class="$attrs.class">I like runoob!</p>
+    <span>这是一个子组件</span>
+  `
+})
