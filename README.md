@@ -469,3 +469,68 @@ v-on:xxx / @xxx
 
 <!-- 没有任何系统修饰符被按下的时候才触发 -->
 <button @click.exact="onClick">A</button>
+
+# Vue3 表单
+
+## 复选框
+
+复选框如果是一个为逻辑值，如果是多个则绑定到同一个数组：
+单选
+<input type="checkbox" id="checkbox" v-model="checked">
+<label for="checkbox">{{ checked }}</label>
+多选
+<input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+<label for="runoob">Runoob</label>
+<input type="checkbox" id="google" value="Google" v-model="checkedNames">
+<label for="google">Google</label>
+
+## 单选按钮
+
+<input type="radio" id="runoob" value="Runoob" v-model="picked">
+<label for="runoob">Runoob</label>
+
+## select 列表
+
+<select v-model="selected" name="site">
+  <option value="">选择一个网站</option>
+  <option value="www.runoob.com">Runoob</option>
+  <option value="www.google.com">Google</option>
+</select>
+
+## 值绑定
+
+### 复选框 (Checkbox)：
+
+<input type="checkbox" v-model="toggle" true-value="yes" false-value="no" />
+...
+// 选中时
+vm.toggle === 'yes'
+// 取消选中 
+vm.toggle === 'no'
+
+### 单选框 (Radio)：
+
+<input type="radio" v-model="pick" v-bind:value="a" />
+// 当选中时
+vm.pick === vm.a
+
+### 选择框选项 (Select)：
+<select v-model="selected">
+  <!-- 内联对象字面量 -->
+  <option :value="{ number: 123 }">123</option>
+</select>
+// 当被选中时
+typeof vm.selected // => 'object'
+vm.selected.number // => 123
+
+## 修饰符
+
+### .lazy
+<!-- 在 "change" 而不是 "input" 事件中更新 -->
+<input v-model.lazy="msg" >
+
+### .number
+<input v-model.number="age" type="number">
+
+### trim
+<input v-model.trim="msg">
